@@ -3,16 +3,20 @@
 import { useEffect, useState } from "react";
 
 import type { CrossChainFee, Token } from "./types";
+import { computeSendType } from "./computeSendType";
 
 const useAmountValidation = (
   sourceTokenSelected: Token | null,
+  destinationTokenSelected: Token | null,
   sourceAmount: string,
-  crossChainFee: CrossChainFee | null,
-  sendType: string | null
+  crossChainFee: CrossChainFee | null
 ) => {
   const [isAmountGTFee, setIsAmountGTFee] = useState(false);
   const [isAmountLTBalance, setIsAmountLTBalance] = useState(false);
-
+  const sendType = computeSendType(
+    sourceTokenSelected,
+    destinationTokenSelected
+  );
   useEffect(() => {
     const am = parseFloat(sourceAmount || "0");
     const ltBalance =

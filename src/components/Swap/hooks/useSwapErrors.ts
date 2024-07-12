@@ -3,16 +3,20 @@
 import { useEffect, useState } from "react";
 
 import type { Error, Errors, Token } from "./types";
+import { computeSendType } from "./computeSendType";
 
 const useSwapErrors = (
   sourceTokenSelected: Token | null,
   destinationTokenSelected: Token | null,
-  sendType: string | null,
   sourceAmount: string,
   isAmountGTFee: boolean,
   isAmountLTBalance: boolean,
   destinationAmountIsLoading: boolean
 ) => {
+  const sendType = computeSendType(
+    sourceTokenSelected,
+    destinationTokenSelected
+  );
   const [errors, setErrors] = useState<Errors>({
     sendTypeUnsupported: {
       message: "Transfer type not supported",

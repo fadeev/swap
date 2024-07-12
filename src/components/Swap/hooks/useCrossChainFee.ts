@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ethers, utils } from "ethers";
 
-import { computeSendType } from "@/components/Swap/hooks/useSendType";
+import { computeSendType } from "./computeSendType";
 
 import { roundNumber } from "../lib/utils";
 import type { CrossChainFee, Token } from "./types";

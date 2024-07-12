@@ -8,12 +8,12 @@ import WETH9 from "@zetachain/protocol-contracts/abi/zevm/WZETA.sol/WETH9.json";
 import { bech32 } from "bech32";
 import { ethers } from "ethers";
 import { parseEther, parseUnits } from "viem";
+import { computeSendType } from "./computeSendType";
 
 import SwapToAnyToken from "./SwapToAnyToken.json";
 import type { Inbound, Token } from "./types";
 
 const useSendTransaction = (
-  sendType: string | null,
   sourceTokenSelected: Token | null,
   destinationTokenSelected: Token | null,
   sourceAmount: string,
@@ -25,6 +25,10 @@ const useSendTransaction = (
   address: `0x${string}` | undefined,
   track?: any
 ) => {
+  const sendType = computeSendType(
+    sourceTokenSelected,
+    destinationTokenSelected
+  );
   const [isSending, setIsSending] = useState(false);
 
   const handleSend = async () => {

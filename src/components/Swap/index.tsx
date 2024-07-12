@@ -8,10 +8,7 @@ import useCrossChainFee from "./hooks/useCrossChainFee";
 import useDestinationAddress from "./hooks/useDestinationAddress";
 import useDestinationAmount from "./hooks/useDestinationAmount";
 import useSendTransaction from "./hooks/useSendTransaction";
-import useSendType, {
-  computeSendType,
-  sendTypeDetails,
-} from "./hooks/useSendType";
+import { computeSendType, sendTypeDetails } from "./hooks/computeSendType";
 import useSwapErrors from "./hooks/useSwapErrors";
 import useTokenSelection from "./hooks/useTokenSelection";
 import { formatAddress } from "./lib/utils";
@@ -75,8 +72,6 @@ export const Swap: React.FC<SwapProps> = ({
     destinationBalances,
   } = useTokenSelection(balances, bitcoinAddress);
 
-  const sendType = useSendType(sourceTokenSelected, destinationTokenSelected);
-
   const { crossChainFee } = useCrossChainFee(
     sourceTokenSelected,
     destinationTokenSelected,
@@ -85,9 +80,9 @@ export const Swap: React.FC<SwapProps> = ({
 
   const { isAmountGTFee, isAmountLTBalance } = useAmountValidation(
     sourceTokenSelected,
+    destinationTokenSelected,
     sourceAmount,
-    crossChainFee,
-    sendType
+    crossChainFee
   );
 
   const { destinationAmount, destinationAmountIsLoading } =
@@ -96,7 +91,6 @@ export const Swap: React.FC<SwapProps> = ({
       destinationTokenSelected,
       sourceAmount,
       crossChainFee,
-      sendType,
       balances,
       client
     );
@@ -104,7 +98,6 @@ export const Swap: React.FC<SwapProps> = ({
   const { priorityErrors } = useSwapErrors(
     sourceTokenSelected,
     destinationTokenSelected,
-    sendType,
     sourceAmount,
     isAmountGTFee,
     isAmountLTBalance,
@@ -122,7 +115,6 @@ export const Swap: React.FC<SwapProps> = ({
   } = useDestinationAddress(address, destinationTokenSelected, bitcoinAddress);
 
   const { handleSend, isSending } = useSendTransaction(
-    sendType,
     sourceTokenSelected,
     destinationTokenSelected,
     sourceAmount,
@@ -133,6 +125,11 @@ export const Swap: React.FC<SwapProps> = ({
     client,
     address,
     track
+  );
+
+  const sendType = computeSendType(
+    sourceTokenSelected,
+    destinationTokenSelected
   );
 
   const sendDisabled =
