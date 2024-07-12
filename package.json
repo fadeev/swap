@@ -1,15 +1,15 @@
 {
   "name": "@fadeev/swap",
   "private": false,
-  "version": "1.0.0",
+  "version": "3.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "npx vite build",
     "start": "next start"
   },
-  "files": [
-    "dist/components.es.js"
-  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
     "@radix-ui/react-dialog": "^1.1.1",

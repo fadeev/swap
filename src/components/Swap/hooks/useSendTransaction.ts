@@ -164,6 +164,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ZETA from ${from} to ${to}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.withdrawBTC = async () => {
@@ -185,6 +186,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ${token} from ${from} to ${to}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.wrapZeta = async () => {
@@ -257,6 +259,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ${token} from ${from} to ${dest}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.depositNative = async () => {
@@ -277,6 +280,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ${token} from ${from} to ${to}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.fromZetaChainSwapAndWithdraw = async () => {
@@ -318,6 +322,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ${sourceTokenSelected.symbol} from ZetaChain to ${destinationTokenSelected.chain_name}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.fromZetaChainSwap = async () => {
@@ -396,6 +401,7 @@ const useSendTransaction = (
           desc: `Sent ${sourceAmount} ${token} from ${from} to ${dest}`,
         });
       }
+      console.log(tx.hash);
     } catch (error) {
       console.error("Error during deposit: ", error);
     }
@@ -454,6 +460,7 @@ const useSendTransaction = (
         desc: `Sent ${sourceAmount} ${ticker} from ${from} to ${dest}`,
       });
     }
+    console.log(tx.hash);
   };
 
   m.crossChainSwapBTC = async () => crossChainSwapHandle(true);
