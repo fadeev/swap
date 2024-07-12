@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react"
+"use client";
 
-import type { Error, Errors, Token } from "./types"
+import { useEffect, useState } from "react";
+
+import type { Error, Errors, Token } from "./types";
 
 const useSwapErrors = (
   sourceTokenSelected: Token | null,
@@ -47,7 +49,7 @@ const useSwapErrors = (
       enabled: false,
       priority: 0,
     },
-  })
+  });
 
   const updateError = (errorKey: keyof Errors, update: Partial<Error>) => {
     setErrors((prevErrors) => ({
@@ -56,25 +58,25 @@ const useSwapErrors = (
         ...prevErrors[errorKey],
         ...update,
       },
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
     if (sourceTokenSelected && destinationTokenSelected) {
-      updateError("sendTypeUnsupported", { enabled: !sendType })
+      updateError("sendTypeUnsupported", { enabled: !sendType });
     }
-    updateError("sourceTokenNotSelected", { enabled: !sourceTokenSelected })
+    updateError("sourceTokenNotSelected", { enabled: !sourceTokenSelected });
     updateError("destinationTokenNotSelected", {
       enabled: !destinationTokenSelected,
-    })
+    });
     if (sourceAmount === null) {
       // if the amount hasn't been set yet (i.e. the user hasn't typed anything)
-      updateError("enterAmount", { enabled: true })
+      updateError("enterAmount", { enabled: true });
     } else {
-      updateError("enterAmount", { enabled: false })
+      updateError("enterAmount", { enabled: false });
       if (!destinationAmountIsLoading) {
-        updateError("amountLTFee", { enabled: !isAmountGTFee })
-        updateError("amountGTBalance", { enabled: !isAmountLTBalance })
+        updateError("amountLTFee", { enabled: !isAmountGTFee });
+        updateError("amountGTBalance", { enabled: !isAmountLTBalance });
       }
     }
   }, [
@@ -85,13 +87,13 @@ const useSwapErrors = (
     isAmountLTBalance,
     sourceAmount,
     destinationAmountIsLoading,
-  ])
+  ]);
 
   const priorityErrors = Object.values(errors)
     .filter((error) => error.enabled)
-    .sort((a, b) => b.priority - a.priority)
+    .sort((a, b) => b.priority - a.priority);
 
-  return { updateError, priorityErrors }
-}
+  return { updateError, priorityErrors };
+};
 
-export default useSwapErrors
+export default useSwapErrors;

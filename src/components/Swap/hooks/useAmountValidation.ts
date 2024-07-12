@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react"
+"use client";
 
-import type { CrossChainFee, Token } from "./types"
+import { useEffect, useState } from "react";
+
+import type { CrossChainFee, Token } from "./types";
 
 const useAmountValidation = (
   sourceTokenSelected: Token | null,
@@ -8,31 +10,31 @@ const useAmountValidation = (
   crossChainFee: CrossChainFee | null,
   sendType: string | null
 ) => {
-  const [isAmountGTFee, setIsAmountGTFee] = useState(false)
-  const [isAmountLTBalance, setIsAmountLTBalance] = useState(false)
+  const [isAmountGTFee, setIsAmountGTFee] = useState(false);
+  const [isAmountLTBalance, setIsAmountLTBalance] = useState(false);
 
   useEffect(() => {
-    const am = parseFloat(sourceAmount || "0")
+    const am = parseFloat(sourceAmount || "0");
     const ltBalance =
-      am >= 0 && am <= parseFloat(sourceTokenSelected?.balance || "0")
+      am >= 0 && am <= parseFloat(sourceTokenSelected?.balance || "0");
 
-    const type = sendType || ""
+    const type = sendType || "";
 
     if (["crossChainZeta"].includes(type)) {
-      const gtFee = am > parseFloat(crossChainFee?.amount.toString() || "0")
-      setIsAmountGTFee(gtFee)
-      setIsAmountLTBalance(ltBalance)
+      const gtFee = am > parseFloat(crossChainFee?.amount.toString() || "0");
+      setIsAmountGTFee(gtFee);
+      setIsAmountLTBalance(ltBalance);
     } else if (["crossChainSwap", "crossChainSwapBTC"].includes(type)) {
-      const gtFee = am > parseFloat(crossChainFee?.amount.toString() || "0")
-      setIsAmountGTFee(gtFee)
-      setIsAmountLTBalance(ltBalance)
+      const gtFee = am > parseFloat(crossChainFee?.amount.toString() || "0");
+      setIsAmountGTFee(gtFee);
+      setIsAmountLTBalance(ltBalance);
     } else {
-      setIsAmountGTFee(true)
-      setIsAmountLTBalance(ltBalance)
+      setIsAmountGTFee(true);
+      setIsAmountLTBalance(ltBalance);
     }
-  }, [sourceAmount, crossChainFee, sendType, sourceTokenSelected])
+  }, [sourceAmount, crossChainFee, sendType, sourceTokenSelected]);
 
-  return { isAmountGTFee, isAmountLTBalance }
-}
+  return { isAmountGTFee, isAmountLTBalance };
+};
 
-export default useAmountValidation
+export default useAmountValidation;

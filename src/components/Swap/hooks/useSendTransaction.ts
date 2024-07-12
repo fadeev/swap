@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import ERC20_ABI from "@openzeppelin/contracts/build/contracts/ERC20.json";
 import { ParamChainName, getAddress } from "@zetachain/protocol-contracts";
