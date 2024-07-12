@@ -46,7 +46,6 @@ export const Swap: React.FC<SwapProps> = ({
       setBalancesLoading(true);
       try {
         const result = await client.getBalances({ evmAddress: address });
-        console.log("BALANCES", result);
         setBalances(result);
       } catch (error) {
         console.error("Error fetching local balances:", error);
