@@ -4,6 +4,10 @@
 yarn add @fadeev/swap
 ```
 
+Should be compatible with a RainbowKit enabled Next.js app, for example:
+
+https://github.com/fadeev/template
+
 Adding a swap component to a app-router Next.js app:
 
 ```ts
