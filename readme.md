@@ -1,5 +1,9 @@
 # Components
 
+```
+yarn add @fadeev/swap
+```
+
 Adding a swap component to a app-router Next.js app:
 
 ```ts
