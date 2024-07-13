@@ -2,20 +2,35 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface Token {
+  id: string;
+  symbol: string;
+  chain_name: string;
+  balance: string;
+}
+
+interface BalancesProps {
+  client: {
+    getBalances: (params: { evmAddress: string }) => Promise<Token[]>;
+  };
+  account: any;
+  onBalanceClick?: (balance: Token) => void;
+}
 
 export const Balances = ({
   client,
-  address,
-}: {
-  client: any;
-  address: any;
-}) => {
-  const [balances, setBalances] = useState([]);
+  account,
+  onBalanceClick = () => {},
+}: BalancesProps) => {
+  const [balances, setBalances] = useState<Token[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [selectedChain, setSelectedChain] = useState("");
+  const { address, status } = account;
 
   useEffect(() => {
     const fetchBalances = async () => {
@@ -32,72 +47,88 @@ export const Balances = ({
   }, [client, address]);
 
   const uniqueChains = Array.from(
-    new Set(balances.map((token: any) => token.chain_name))
+    new Set(balances.map((token: Token) => token.chain_name))
   );
 
   const filteredBalances = balances
     .filter(
-      (token: any) =>
+      (token: Token) =>
         token.symbol.toLowerCase().includes(search.toLowerCase()) &&
         (selectedChain === "" || token.chain_name === selectedChain)
     )
-    .sort((a: any, b: any) => parseFloat(b.balance) - parseFloat(a.balance)); // Sort tokens by amount
+    .sort(
+      (a: Token, b: Token) => parseFloat(b.balance) - parseFloat(a.balance)
+    );
+
+  const SearchInput = (
+    <div className="m-2 relative">
+      <Input
+        placeholder="Search tokens..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="pl-9"
+      />
+      <Search className="absolute left-3 top-3 w-4 h-4 text-gray-500" />
+    </div>
+  );
+
+  const ChainFilter = (
+    <div className="relative overflow-x-auto scrollbar-hide px-2">
+      <div className="flex">
+        {uniqueChains.map((chain) => (
+          <Button
+            variant="outline"
+            size="sm"
+            key={chain}
+            className={`mr-2 ${selectedChain === chain ? "bg-slate-100" : ""}`}
+            onClick={() =>
+              setSelectedChain(chain === selectedChain ? "" : chain)
+            }
+          >
+            {chain}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const BalancesList = (filteredBalances: Token[]) => {
+    return (
+      <div className="m-2 max-h-96 overflow-scroll">
+        {filteredBalances.map((token: Token) => (
+          <div
+            key={token.id}
+            className="flex justify-between py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer"
+            onClick={() => onBalanceClick(token)}
+          >
+            <div className="flex flex-col">
+              <span>{token.symbol}</span>
+              <span className="text-gray-500 text-xs">{token.chain_name}</span>
+            </div>
+            <span>{parseFloat(token.balance).toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const LoadingSkeleton = (
+    <div className="space-y-2 px-2 pb-2">
+      {Array(5)
+        .fill(null)
+        .map((_, index) => (
+          <Skeleton key={index} className="h-10 w-full" />
+        ))}
+    </div>
+  );
 
   return (
     <div>
       <Card>
-        <div className="m-2 relative">
-          <Input
-            placeholder="Search tokens..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
-          />
-          <Search className="absolute left-3 top-3 w-4 h-4 text-gray-500" />
-        </div>
-
-        <div className="relative overflow-x-auto scrollbar-hide px-2">
-          <div className="flex">
-            {uniqueChains.map((chain) => (
-              <Button
-                variant="outline"
-                size="sm"
-                key={chain}
-                className={`mr-2 ${
-                  selectedChain === chain ? "bg-slate-100" : ""
-                }`}
-                onClick={() =>
-                  setSelectedChain(chain === selectedChain ? "" : chain)
-                }
-              >
-                {chain}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="flex items-center justify-center p-10">
-            <LoaderCircle className="w-6 h-6 animate-spin" />
-          </div>
-        ) : (
-          <div className="m-2 max-h-96 overflow-scroll">
-            {filteredBalances.map((token: any) => (
-              <div
-                key={token.id}
-                className="flex justify-between py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer"
-              >
-                <div className="flex flex-col">
-                  <span>{token.symbol}</span>
-                  <span className="text-gray-500 text-xs">
-                    {token.chain_name}
-                  </span>
-                </div>
-                <span>{parseFloat(token.balance).toFixed(2)}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {SearchInput}
+        {status === "connected" && filteredBalances.length > 0
+          ? ChainFilter && BalancesList(filteredBalances)
+          : LoadingSkeleton}
       </Card>
     </div>
   );
