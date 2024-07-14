@@ -6,8 +6,7 @@ import { useZetaChainClient } from "@/components/Balances/hooks/useZetaChainClie
 import { useEthersSigner } from "@/components/Balances/hooks/useEthersSigner";
 import { useAccount, useSwitchChain, useChainId, useWalletClient } from "wagmi";
 
-const url =
-  "https://zetachain-athens.g.allthatnode.com/archive/evm/c8a40e8773fd4b0381f8447d2dcfb550";
+const url = "https://zetachain-athens.g.allthatnode.com/archive/evm";
 
 function Page() {
   const account = useAccount();
