@@ -17,8 +17,7 @@ interface SwapProps {
   contract: string;
   client: any;
   switchChain: (params: { chainId: number }) => void;
-  address: `0x${string}` | undefined;
-  chain: number;
+  account: any;
   track?: any;
   balances?: any;
 }
@@ -29,9 +28,9 @@ export const Swap: React.FC<SwapProps> = ({
   balances: balancesProp,
   client,
   switchChain,
-  address,
-  chain,
+  account,
 }) => {
+  const { address, chainId } = account;
   const bitcoinAddress = ""; // temporary
 
   const [sourceAmount, setSourceAmount] = useState<string>("");
@@ -41,26 +40,26 @@ export const Swap: React.FC<SwapProps> = ({
   const [balances, setBalances] = useState<any>(balancesProp || []);
   const [balancesLoading, setBalancesLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchBalances = async () => {
-      setBalancesLoading(true);
-      try {
-        const result = await client.getBalances({ evmAddress: address });
-        setBalances(result);
-      } catch (error) {
-        console.error("Error fetching local balances:", error);
-      } finally {
-        setBalancesLoading(false);
-      }
-    };
+  const fetchBalances = async () => {
+    setBalancesLoading(true);
+    try {
+      const result = await client.getBalances({ evmAddress: address });
+      setBalances(result);
+    } catch (error) {
+      console.error("Error fetching local balances:", error);
+    } finally {
+      setBalancesLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (balancesProp) {
       setBalances(balancesProp);
       setBalancesLoading(false);
-    } else {
+    } else if (address) {
       fetchBalances();
     }
-  }, []);
+  }, [address]);
 
   const {
     setSourceToken,
@@ -154,12 +153,12 @@ export const Swap: React.FC<SwapProps> = ({
   useEffect(() => {
     if (sourceTokenSelected?.chain_name === "btc_testnet") {
       setIsRightChain(true);
-    } else if (chain && sourceTokenSelected) {
+    } else if (chainId && sourceTokenSelected) {
       setIsRightChain(
-        chain.toString() === sourceTokenSelected.chain_id.toString()
+        chainId.toString() === sourceTokenSelected.chain_id.toString()
       );
     }
-  }, [chain, sourceTokenSelected]);
+  }, [chainId, sourceTokenSelected]);
 
   const handleSwitchNetwork = () => {
     const chain_id = sourceTokenSelected?.chain_id;

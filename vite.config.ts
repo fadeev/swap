@@ -25,7 +25,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: "./src/components/index.ts",
+      entry: "./src/index.ts",
       name: "MyLib",
       formats: ["es"],
       fileName: (format) => `index.js`,
