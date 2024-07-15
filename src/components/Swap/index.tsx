@@ -164,6 +164,7 @@ export const Swap: React.FC<SwapProps> = ({
     const chain_id = sourceTokenSelected?.chain_id;
     if (chain_id) {
       console.log(chain_id);
+      console.log(switchChain);
       switchChain({ chainId: chain_id });
     }
   };

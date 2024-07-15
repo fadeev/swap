@@ -106,7 +106,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
   };
 
   return (
-    <div className="shadow-none md:shadow-xl p-0 md:px-5 md:py-7 rounded-2xl md:shadow-gray-100 mb-10">
+    <div className="bg-slate-50 shadow-none p-0 md:px-5 md:py-7 rounded-2xl md:shadow-gray-100 mb-10">
       <h1 className="text-2xl font-bold leading-tight tracking-tight mt-6 mb-4 ml-2">
         {sendTypeDetails[sendType as any]?.title || "Swap"}
       </h1>
@@ -146,7 +146,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
                         parseFloat(sourceTokenSelected.balance).toFixed(2)}
                     </div>
                   </div>
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-zinc-400">
                     {sourceTokenSelected
                       ? sourceTokenSelected.chain_name
                       : "Send token"}
@@ -183,7 +183,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
                             <div>{balances.symbol}</div>
                             <div>{parseFloat(balances.balance).toFixed(2)}</div>
                           </div>
-                          <div className="text-xs text-slate-400">
+                          <div className="text-xs text-zinc-400">
                             {balances.chain_name}
                           </div>
                         </div>
@@ -205,7 +205,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
               disabled={true}
             />
             {destinationAmountIsLoading && (
-              <div className="translate-y-[-50%] absolute top-[50%] left-[1rem]">
+              <div className="tranzinc-y-[-50%] absolute top-[50%] left-[1rem]">
                 <Loader2 className="h-6 w-6 animate-spin opacity-40" />
               </div>
             )}
@@ -228,7 +228,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
                       ? destinationTokenSelected.symbol
                       : "Token"}
                   </div>
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-zinc-400">
                     {destinationTokenSelected
                       ? destinationTokenSelected.chain_name
                       : "Receive token"}
@@ -273,7 +273,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
                             <div>{balances.symbol}</div>
                             <div>{parseFloat(balances.balance).toFixed(2)}</div>
                           </div>
-                          <div className="text-xs text-slate-400">
+                          <div className="text-xs text-zinc-400">
                             {balances.chain_name}
                           </div>
                         </div>
@@ -338,7 +338,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
               </PopoverTrigger>
               <PopoverContent className="rounded-xl w-auto text-xs border-none shadow-2xl">
                 <div className="font-medium text-center">Cross-Chain Fee</div>
-                <div className="text-slate-400">{crossChainFee?.amount}</div>
+                <div className="text-zinc-400">{crossChainFee?.amount}</div>
               </PopoverContent>
             </Popover>
           )}
