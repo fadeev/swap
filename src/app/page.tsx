@@ -3,12 +3,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Swap, Balances, useZetaChainClient, useEthersSigner } from "@/index";
 import { useAccount, useSwitchChain, useChainId, useWalletClient } from "wagmi";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const contract = "0xb459F14260D1dc6484CE56EB0826be317171e91F";
 
 function Page() {
   const account = useAccount();
-  const { switchChain } = useSwitchChain();
   const chainId = useChainId();
   const { data: walletClient } = useWalletClient({ chainId });
   const signer = useEthersSigner({ walletClient });
@@ -21,16 +21,12 @@ function Page() {
       </div>
       <div className="flex justify-center">
         <div className="w-[400px]">
+          <ThemeToggle />
           {client && (
             <div>
               {/* <Balances client={client} account={account}></Balances> */}
 
-              <Swap
-                contract={contract}
-                client={client}
-                switchChain={switchChain}
-                account={account}
-              />
+              <Swap client={client} account={account} contract={contract} />
             </div>
           )}
         </div>

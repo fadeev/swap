@@ -16,7 +16,6 @@ import { formatAddress } from "./lib/utils";
 interface SwapProps {
   contract: string;
   client: any;
-  switchChain: (params: { chainId: number }) => void;
   account: any;
   track?: any;
   balances?: any;
@@ -27,7 +26,6 @@ export const Swap: React.FC<SwapProps> = ({
   track,
   balances: balancesProp,
   client,
-  switchChain,
   account,
 }) => {
   const { address, chainId } = account;
@@ -160,15 +158,6 @@ export const Swap: React.FC<SwapProps> = ({
     }
   }, [chainId, sourceTokenSelected]);
 
-  const handleSwitchNetwork = () => {
-    const chain_id = sourceTokenSelected?.chain_id;
-    if (chain_id) {
-      console.log(chain_id);
-      console.log(switchChain);
-      switchChain({ chainId: chain_id });
-    }
-  };
-
   return (
     <div>
       <SwapLayout
@@ -200,7 +189,6 @@ export const Swap: React.FC<SwapProps> = ({
         sendDisabled={sendDisabled}
         isSending={isSending}
         sendButtonText={sendButtonText}
-        handleSwitchNetwork={handleSwitchNetwork}
       />
     </div>
   );

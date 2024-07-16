@@ -62,7 +62,6 @@ interface SwapLayoutProps {
   sendDisabled: boolean;
   isSending: boolean;
   sendButtonText: string;
-  handleSwitchNetwork: () => void;
 }
 
 const SwapLayout: React.FC<SwapLayoutProps> = ({
@@ -94,7 +93,6 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
   sendDisabled,
   isSending,
   sendButtonText,
-  handleSwitchNetwork,
 }) => {
   const [sourceTokenOpen, setSourceTokenOpen] = useState(false);
   const [destinationTokenOpen, setDestinationTokenOpen] = useState(false);
@@ -350,7 +348,6 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
             <div>
               <Button
                 variant="outline"
-                className="bg-white"
                 onClick={handleSend}
                 disabled={sendDisabled}
               >
@@ -365,8 +362,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
           ) : (
             <Button
               variant="outline"
-              className="bg-white"
-              onClick={handleSwitchNetwork}
+              disabled={true}
               // disabled={
               //   isLoading && pendingChainId === sourceTokenSelected.chain_id
               // }
