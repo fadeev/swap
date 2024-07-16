@@ -101,7 +101,9 @@ export const Balances = ({
             variant="outline"
             size="sm"
             key={chain}
-            className={`mr-2 ${selectedChain === chain ? "bg-slate-100" : ""}`}
+            className={`mr-2 ${
+              selectedChain === chain ? "bg-zinc-100 dark:bg-zinc-800" : ""
+            }`}
             onClick={() =>
               setSelectedChain(chain === selectedChain ? "" : chain)
             }
@@ -118,7 +120,7 @@ export const Balances = ({
       {filteredBalances.map((token: Token) => (
         <div
           key={token.id}
-          className="flex justify-between py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer"
+          className="flex justify-between py-2 px-3 dark:hover:bg-zinc-800 hover:bg-gray-100 rounded-md cursor-pointer"
           onClick={() => onBalanceClick(token)}
         >
           <div className="flex flex-col">
@@ -142,14 +144,14 @@ export const Balances = ({
   );
 
   const ErrorMessage = (
-    <div className="p-2 pb-4 text-center text-slate-400">
+    <div className="p-2 pb-4 text-center text-zinc-400">
       Something went wrong
     </div>
   );
 
   return (
     <div>
-      <Card>
+      <Card className="dark:bg-zinc-900">
         {SearchInput}
         {error ? (
           ErrorMessage

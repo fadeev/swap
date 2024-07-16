@@ -16,17 +16,17 @@ function Page() {
 
   return (
     <div className="m-4">
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2 mb-10">
+        <ThemeToggle />
         <ConnectButton />
       </div>
       <div className="flex justify-center">
         <div className="w-[400px]">
-          <ThemeToggle />
           {client && (
             <div>
-              {/* <Balances client={client} account={account}></Balances> */}
+              <Balances client={client} account={account}></Balances>
 
-              <Swap client={client} account={account} contract={contract} />
+              {/* <Swap client={client} account={account} contract={contract} /> */}
             </div>
           )}
         </div>
