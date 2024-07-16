@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -106,7 +107,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
   };
 
   return (
-    <div className="bg-slate-50 shadow-none p-0 md:px-5 md:py-7 rounded-2xl md:shadow-gray-100 mb-10">
+    <Card className="p-0 px-5 pb-7 pt-2">
       <h1 className="text-2xl font-bold leading-tight tracking-tight mt-6 mb-4 ml-2">
         {sendTypeDetails[sendType as any]?.title || "Swap"}
       </h1>
@@ -117,7 +118,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
       >
         <div className="grid grid-cols-4 gap-4 mb-4">
           <Input
-            className="col-span-2 h-full text-xl border-none"
+            className="col-span-2 h-full text-xl border-none bg-transparent"
             onChange={(e) => setSourceAmount(e.target.value)}
             placeholder="0"
             value={sourceAmount}
@@ -349,6 +350,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
             <div>
               <Button
                 variant="outline"
+                className="bg-white"
                 onClick={handleSend}
                 disabled={sendDisabled}
               >
@@ -363,6 +365,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
           ) : (
             <Button
               variant="outline"
+              className="bg-white"
               onClick={handleSwitchNetwork}
               // disabled={
               //   isLoading && pendingChainId === sourceTokenSelected.chain_id
@@ -378,7 +381,7 @@ const SwapLayout: React.FC<SwapLayoutProps> = ({
           )}
         </div>
       </form>
-    </div>
+    </Card>
   );
 };
 

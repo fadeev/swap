@@ -27,7 +27,7 @@
     "cmdk": "^1.0.0",
     "ethers": "v5",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.407.0",
+    "lucide-react": "^0.408.0",
     "next": "^14.2.3",
     "postcss": "^8.4.39",
     "react": "^18.3.0",
